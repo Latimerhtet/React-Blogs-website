@@ -54,6 +54,7 @@ nav div a.active::before {
   justify-content: center;
   align-items: center;
   gap: 30px;
+  margin-bottom: 50px;
 }
 .post img {
   width: 600px;
@@ -65,6 +66,10 @@ nav div a.active::before {
 }
 .post {
   position: relative;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 .post::before {
   content: "";
@@ -88,8 +93,12 @@ nav div a.active::before {
 .blog-heading {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 50px;
+}
+.postForm-heading {
+  align-items: center;
+  margin-bottom: 10px;
 }
 .blog img {
   width: 100%;
@@ -125,15 +134,35 @@ nav div a.active::before {
   width: 20px;
   height: 20px;
 }
-.arrow-left-icon {
+/* .editIcon,
+.deleteIcon {
+  width: 25px;
+  height: 25px;
+} */
+/* .editAndDelete {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+} */
+.actions-Div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.arrow-left-icon,
+.editIcon,
+.deleteIcon {
   cursor: pointer;
-  width: 35px;
-  height: 35px;
-
+  width: 30px;
+  height: 30px;
   padding: 5px;
   border-radius: 50%;
 }
-.arrow-left-icon:hover {
+.arrow-left-icon:hover,
+.editIcon:hover,
+.deleteIcon:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 .postFrom-main {
@@ -143,7 +172,10 @@ nav div a.active::before {
 .postForm div {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
+}
+.postForm div span {
+  color: rgb(220, 62, 62);
 }
 .postForm div input {
   padding: 8px;

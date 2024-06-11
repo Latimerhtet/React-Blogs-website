@@ -5,7 +5,7 @@ const Post = ({ post }) => {
   const { id, title, date, image } = post;
   return (
     <>
-      <Link to={`/postDetail/${id}`}>
+      <Link to={`${id}`}>
         <div className="post" key={id}>
           <img src={image} alt={title} />
           <h2>{title}</h2>

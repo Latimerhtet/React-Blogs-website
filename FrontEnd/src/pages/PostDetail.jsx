@@ -1,9 +1,34 @@
 import React from "react";
-import { Link, json, useLoaderData } from "react-router-dom";
-import { CalendarDaysIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
+import {
+  Link,
+  json,
+  redirect,
+  useLoaderData,
+  useNavigate,
+  useRouteLoaderData,
+  useSubmit,
+} from "react-router-dom";
+import {
+  CalendarDaysIcon,
+  ArrowLeftIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from "@heroicons/react/24/solid";
 const PostDetail = () => {
-  const post = useLoaderData();
+  const post = useRouteLoaderData("postDetail");
+  const submit = useSubmit();
+  const navigate = useNavigate();
   const { id, title, date, image, description } = post;
+  const editPostHandler = () => {
+    navigate(`edit`);
+  };
+  const deletePostHandler = () => {
+    const confirmStatus = window.confirm("Are you sure to delete this post?");
+    if (confirmStatus) {
+      submit(null, { method: "DELETE" });
+    }
+    return;
+  };
   return (
     <div className="blog-div">
       <div className="blog" key={id}>
@@ -14,9 +39,13 @@ const PostDetail = () => {
               <CalendarDaysIcon className="calendarIcon" /> <span>{date}</span>
             </p>
           </div>
-          <Link to={"/"}>
-            <ArrowLeftIcon className="arrow-left-icon" />
-          </Link>
+          <div className="actions-Div">
+            <Link to={"/"}>
+              <ArrowLeftIcon className="arrow-left-icon" />
+            </Link>
+            <PencilSquareIcon className="editIcon" onClick={editPostHandler} />
+            <TrashIcon onClick={deletePostHandler} className="deleteIcon" />
+          </div>
         </div>
         <img src={image} alt={title} />
         <p>{description}</p>
@@ -27,7 +56,7 @@ const PostDetail = () => {
 
 export default PostDetail;
 
-export const loader = async ({ method, params }) => {
+export const loader = async ({ request, params }) => {
   const response = await fetch(`http://localhost:8080/posts/${params.id}`);
   if (!response.ok) {
     throw json(
@@ -37,5 +66,16 @@ export const loader = async ({ method, params }) => {
   } else {
     const blog = await response.json();
     return blog.post;
+  }
+};
+
+export const action = async ({ request, params }) => {
+  const response = await fetch(`http://localhost:8080/posts/${params.id}`, {
+    method: request.method,
+  });
+  if (!response.ok) {
+    throw json({ message: "Delete action is not successful" }, { status: 400 });
+  } else {
+    return redirect("/");
   }
 };
