@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { json, useLoaderData } from "react-router-dom";
 import Post from "../components/Post";
+import PrePage from "./PrePage";
 const Posts = () => {
   const posts = useLoaderData();
+  const [showPosts, setShowPosts] = useState(false);
   return (
-    <div className="blogs">
-      {posts.map((post) => {
-        return <Post key={post.id} post={post} />;
-      })}
-    </div>
+    <>
+      <div className="blogs">
+        {posts.map((post) => {
+          return <Post key={post.id} post={post} />;
+        })}
+      </div>
+    </>
   );
 };
 
