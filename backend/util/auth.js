@@ -1,10 +1,12 @@
 const { sign, verify } = require("jsonwebtoken");
 const { compare } = require("bcryptjs");
 const { NotAuthError } = require("./errors");
-
-const KEY = "codehub$123";
-
+const dotenv = require("dotenv");
+dotenv.config();
+const KEY = process.env.JWT_KEY;
+// dslwjkfhweoiyt983456980321598321wyrt98;
 function createJSONToken(email) {
+  console.log(KEY);
   return sign({ email }, KEY, { expiresIn: "1h" });
 }
 
