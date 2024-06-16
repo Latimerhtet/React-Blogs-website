@@ -13,19 +13,29 @@ import { action as editingPostAction } from "./components/PostFrom";
 import PostDetail from "./pages/PostDetail";
 import Error from "./pages/Error";
 import Edit from "./pages/Edit";
+import Auth, { action as authAction } from "./pages/Auth";
+import Logout, { loader as logoutLoader } from "./pages/Logout";
+import { checkTokenLoader, tokenLoader } from "./util/Auth";
+import Interior from "./pages/Interior";
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Main />,
       errorElement: <Error />,
+      id: "main",
+      loader: tokenLoader,
       children: [
         { index: true, element: <Posts />, loader: postsLoader },
         {
           path: "/createpost",
           element: <CreatePost />,
+          loader: checkTokenLoader,
           action: creatingPostAction,
         },
+        { path: "/auth", element: <Auth />, action: authAction },
+        { path: "/logout", element: <Logout />, loader: logoutLoader },
+        { path: "/interior", element: <Interior /> },
         {
           path: ":id",
           id: "postDetail",
@@ -36,7 +46,12 @@ const App = () => {
               element: <PostDetail />,
               action: deleteAction,
             },
-            { path: "edit", element: <Edit />, action: editingPostAction },
+            {
+              path: "edit",
+              element: <Edit />,
+              action: editingPostAction,
+              loader: checkTokenLoader,
+            },
           ],
         },
       ],

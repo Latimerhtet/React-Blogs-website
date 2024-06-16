@@ -31,6 +31,7 @@ nav div a {
   position: relative;
 }
 nav div a:first-child::before,
+nav div a:nth-child(2)::before,
 nav div a:last-child::before {
   content: "";
   height: 2px;
@@ -41,8 +42,11 @@ nav div a:last-child::before {
   transform: scale(0);
   transition: all 0.3s;
 }
-nav div a:last-child::before {
+nav div a:nth-child(2)::before {
   width: 90px;
+}
+nav div a:last-child::before {
+  width: 45px;
 }
 nav div a.active::before {
   transform: scale(1);
@@ -186,7 +190,8 @@ nav div a.active::before {
 .postForm div label {
   font-size: 15px;
 }
-.postForm button {
+.postForm button,
+.formalBtn {
   padding: 15px 0;
   font-size: 16px;
   background-color: #000;
@@ -195,7 +200,11 @@ nav div a.active::before {
   letter-spacing: 0.2rem;
   cursor: pointer;
 }
-.postForm button:hover {
+.formalBtn {
+  padding: 15px;
+}
+.postForm button:hover,
+.formalBtn:hover {
   background-color: #fff;
   color: #000;
 }
@@ -208,4 +217,98 @@ textarea {
   resize: none;
   outline: none;
   padding: 10px;
+}
+
+.login-form input {
+  width: 400px;
+}
+
+.loginAndRegister a {
+  text-decoration: underline;
+}
+.loginAndRegister a:hover {
+  opacity: 0.7;
+}
+
+.lds-facebook,
+.lds-facebook div {
+  box-sizing: border-box;
+}
+.lds-facebook {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: black;
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0s;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%,
+  100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+
+.loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prepage-main {
+  width: 100%;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.prepage-description p {
+  width: 400px;
+}
+.prepage-main div {
+  width: 55%;
+  display: flex;
+  gap: 10px;
+}
+.prepage-main img {
+  width: 400px;
+}
+.prepage-sub {
+  display: flex;
+  flex-direction: column;
+}
+.btn-groups a button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: aqua;
+}
+.btn-groups a button:first-child {
+  background-color: #333;
+  color: #fff;
 }

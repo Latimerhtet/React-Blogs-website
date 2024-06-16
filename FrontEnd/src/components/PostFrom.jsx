@@ -1,8 +1,17 @@
 import React from "react";
-import { Form, Link, redirect, useActionData } from "react-router-dom";
+import {
+  Form,
+  Link,
+  redirect,
+  useActionData,
+  useNavigation,
+} from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { getToken } from "../util/Auth";
 const PostFrom = ({ heading, actionBtnText, editOldPost, method }) => {
   const errData = useActionData();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state == "submitting";
 
   return (
     <section className="postFrom-main">
@@ -62,7 +71,9 @@ const PostFrom = ({ heading, actionBtnText, editOldPost, method }) => {
             <span>!{errData.errors.description}</span>
           ) : null}
         </div>
-        <button type="submit">{actionBtnText}</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Submitting" : actionBtnText}
+        </button>
       </Form>
     </section>
   );
@@ -72,7 +83,7 @@ export default PostFrom;
 
 export const action = async ({ request, params }) => {
   const post = await request.formData();
-
+  const token = getToken();
   const desiredMethod = request.method;
   const postData = {
     id: crypto.randomUUID(),
@@ -90,7 +101,10 @@ export const action = async ({ request, params }) => {
 
   const response = await fetch(url, {
     method: desiredMethod,
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
     body: JSON.stringify(postData),
   });
   if (response.status === 422) {

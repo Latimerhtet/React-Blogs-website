@@ -14,7 +14,9 @@ import {
   PencilSquareIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
+import { getToken } from "../util/Auth";
 const PostDetail = () => {
+  const hasToken = useRouteLoaderData("main");
   const post = useRouteLoaderData("postDetail");
   const submit = useSubmit();
   const navigate = useNavigate();
@@ -43,8 +45,15 @@ const PostDetail = () => {
             <Link to={"/"}>
               <ArrowLeftIcon className="arrow-left-icon" />
             </Link>
-            <PencilSquareIcon className="editIcon" onClick={editPostHandler} />
-            <TrashIcon onClick={deletePostHandler} className="deleteIcon" />
+            {hasToken && (
+              <>
+                <PencilSquareIcon
+                  className="editIcon"
+                  onClick={editPostHandler}
+                />
+                <TrashIcon onClick={deletePostHandler} className="deleteIcon" />
+              </>
+            )}
           </div>
         </div>
         <img src={image} alt={title} />
@@ -70,8 +79,10 @@ export const loader = async ({ request, params }) => {
 };
 
 export const action = async ({ request, params }) => {
+  const token = getToken();
   const response = await fetch(`http://localhost:8080/posts/${params.id}`, {
     method: request.method,
+    headers: { Authorization: "Bearer " + token },
   });
   if (!response.ok) {
     throw json({ message: "Delete action is not successful" }, { status: 400 });

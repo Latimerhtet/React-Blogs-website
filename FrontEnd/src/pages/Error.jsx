@@ -8,6 +8,8 @@ const Error = () => {
     errText = "The page you are trying to access is not found";
   } else if (error.status == 400) {
     errText = "Action is not successful!!";
+  } else if (error.status == 101) {
+    errText = "invalid error";
   }
   return (
     <div className="error">
