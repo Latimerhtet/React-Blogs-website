@@ -13,6 +13,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 const Main = () => {
   const token = useLoaderData();
   const { state } = useNavigation();
+  console.log(import.meta.env.VITE_DOMAIN);
   useEffect(() => {
     if (!token) {
       return;

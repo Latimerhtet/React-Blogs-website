@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { getToken } from "../util/Auth";
+
 const PostFrom = ({ heading, actionBtnText, editOldPost, method }) => {
   const errData = useActionData();
   const navigation = useNavigation();
@@ -92,11 +93,11 @@ export const action = async ({ request, params }) => {
     image: post.get("image"),
     description: post.get("description"),
   };
-  let url = "http://localhost:8080/posts";
+  let url = `${import.meta.env.VITE_DOMAIN}/posts`;
   let direction = "/";
   if (desiredMethod === "PATCH") {
     const id = params.id;
-    url = `http://localhost:8080/posts/${id}`;
+    url = `${import.meta.env.VITE_DOMAIN}/posts/${id}`;
   }
 
   const response = await fetch(url, {

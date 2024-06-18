@@ -15,6 +15,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import { getToken } from "../util/Auth";
+
 const PostDetail = () => {
   const hasToken = useRouteLoaderData("main");
   const post = useRouteLoaderData("postDetail");
@@ -66,7 +67,8 @@ const PostDetail = () => {
 export default PostDetail;
 
 export const loader = async ({ request, params }) => {
-  const response = await fetch(`http://localhost:8080/posts/${params.id}`);
+  const url = import.meta.env.VITE_DOMAIN;
+  const response = await fetch(`${url}/posts/${params.id}`);
   if (!response.ok) {
     throw json(
       { message: "The blog you are trying to access is unavailable!" },
@@ -79,8 +81,9 @@ export const loader = async ({ request, params }) => {
 };
 
 export const action = async ({ request, params }) => {
+  const url = import.meta.env.VITE_DOMAIN;
   const token = getToken();
-  const response = await fetch(`http://localhost:8080/posts/${params.id}`, {
+  const response = await fetch(`${url}/posts/${params.id}`, {
     method: request.method,
     headers: { Authorization: "Bearer " + token },
   });

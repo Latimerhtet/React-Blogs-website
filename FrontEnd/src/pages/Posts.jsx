@@ -1,10 +1,9 @@
-import React, { useState } from "react";
 import { json, useLoaderData } from "react-router-dom";
 import Post from "../components/Post";
-import PrePage from "./PrePage";
+
 const Posts = () => {
   const posts = useLoaderData();
-  const [showPosts, setShowPosts] = useState(false);
+
   return (
     <>
       <div className="blogs">
@@ -19,7 +18,8 @@ const Posts = () => {
 export default Posts;
 
 export const loader = async () => {
-  const response = await fetch("http://localhost:8080/posts");
+  const url = import.meta.env.VITE_DOMAIN;
+  const response = await fetch(`${url}/posts`);
   if (!response.ok) {
     throw json(
       { message: "The page that you are trying to access is not found!" },
