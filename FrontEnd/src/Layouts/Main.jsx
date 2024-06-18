@@ -9,11 +9,11 @@ import {
 import Navbar from "../components/Navbar";
 import { getExpiredDuration } from "../util/Auth";
 import LoadingSpinner from "../components/LoadingSpinner";
-
+import.meta.env.VITE_DOMAIN;
 const Main = () => {
   const token = useLoaderData();
   const { state } = useNavigation();
-  console.log(import.meta.env.VITE_DOMAIN);
+
   useEffect(() => {
     if (!token) {
       return;
